@@ -1,10 +1,11 @@
 <template>
-  <form v-on:submit="searchSubmit">
-    <label>Search:</label>
-    <input v-model='searchText'>
-    <p>{{ searchResult }}</p>
-    <button type="submit">Submit</button>
-  </form>
+  <div>
+    <form>
+      <label>Search:</label>
+      <input v-model="text">
+      <button v-on:click="searchSubmit">Submit</button>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -12,15 +13,45 @@
     name: 'searchInput',
     data: function() {
       return {
-        searchText: '',
-        searchResult: ''
+        text: ''
       }
     },
     methods: {
-      searchSubmit: function(event) {
-        event.preventDefault();
-        this.searchResult = event.target[0].value;
+      searchSubmit: function(e) {
+        e.preventDefault();
+        console.log(this.text);
+        this.$emit('search:submit', this.text);
+        this.text = '';
       }
     }
   }
 </script>
+
+<style>
+  form {
+    width: 320px;
+    margin: 0 auto;
+    color: mediumseagreen;
+  }
+
+  label {
+    font-size: 18px;
+    margin-right: 10px;
+  }
+
+  input {
+    width: 230px;
+    height: 20px;
+  }
+
+  button {
+    display: block;
+    width: 100px;
+    height: 30px;
+    margin: 10px auto;
+    background: mediumseagreen;
+    color: white;
+    border: none;
+    font-size: 16px;
+  }
+</style>

@@ -1,18 +1,30 @@
 <template>
   <div id="app">
-    <appHeader/>
-    <searchInput/>
+    <appHeader></appHeader>
+    <searchInput v-on:search:submit="searchSubmit"></searchInput>
+    <searchOutput :text="text"></searchOutput>
   </div>
 </template>
 
 <script>
   import appHeader from './components/Header.vue';
   import searchInput from './components/SearchInput.vue';
+  import searchOutput from './components/SearchOutput.vue';
 
   export default {
     name: 'app',
+    data: function() {
+      return {
+        text:''
+      }
+    },
+    methods: {
+      searchSubmit: function(text) {
+        this.text = text
+      }
+    },
     components: {
-      appHeader, searchInput
+      appHeader, searchInput, searchOutput
     }
   }
 </script>
@@ -30,14 +42,6 @@
     color: #2c3e50;
   }
 
-  .header {
-    text-align: center;
-    background: mediumseagreen;
-    color: white;
-    padding: 10px;
-    margin-bottom: 10px;
-  }
-
   h1 {
     font-weight: 200;
     margin: 0;
@@ -46,32 +50,5 @@
   ul {
     list-style-type: none;
     padding: 0;
-  }
-
-  form {
-    width: 320px;
-    margin: 0 auto;
-    color: mediumseagreen;
-  }
-
-  label {
-    font-size: 18px;
-    margin-right: 10px;
-  }
-
-  input {
-    width: 230px;
-    height: 20px;
-  }
-
-  button {
-    display: block;
-    width: 100px;
-    height: 30px;
-    margin: 0 auto;
-    background: mediumseagreen;
-    color: white;
-    border: none;
-    font-size: 16px;
   }
 </style>

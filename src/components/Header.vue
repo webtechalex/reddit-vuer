@@ -11,3 +11,12 @@
   }
 </script>
 
+<style>
+  .header {
+    text-align: center;
+    background: mediumseagreen;
+    color: white;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+</style>
