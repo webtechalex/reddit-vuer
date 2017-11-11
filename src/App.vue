@@ -2,11 +2,13 @@
   <div id="app">
     <appHeader></appHeader>
     <searchInput v-on:search:submit="searchSubmit"></searchInput>
-    <searchOutput :text="text"></searchOutput>
+    <searchOutput :searchResults="searchResults"></searchOutput>
   </div>
 </template>
 
 <script>
+  import axios from 'axios';
+
   import appHeader from './components/Header.vue';
   import searchInput from './components/SearchInput.vue';
   import searchOutput from './components/SearchOutput.vue';
@@ -15,12 +17,31 @@
     name: 'app',
     data: function() {
       return {
-        text:''
+        text:'',
+        searchResults: null
       }
     },
     methods: {
       searchSubmit: function(text) {
-        this.text = text
+        let app = this;
+
+        axios.get('https://www.reddit.com/r/' + text + '.json')
+          .then(function (response) {
+//            console.log(response.data.data.children);
+            const rawData = response.data.data.children;
+            const responseArray = Array.from(rawData).map((item, index) => {
+              return {
+                title: rawData[index].data.title,
+                selftext: rawData[index].data.selftext,
+                url: rawData[index].data.url
+              };
+            });
+            app.searchResults = responseArray;
+            console.log(app.searchResults);
+          })
+          .catch(function(err) {
+            console.log(err);
+          });
       }
     },
     components: {
