@@ -1,5 +1,5 @@
 <template>
-  <div class="result-container">
+  <div v-if="searchResults.length" class="result-container">
     <ul>
       <li v-for="result in searchResults" v-bind:result="result">{{ result.title }}<p>{{ result.selftext }}</p><a v-bind:href="result.url">Read this thread...</a></li>
     </ul>

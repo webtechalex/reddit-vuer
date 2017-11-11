@@ -2,6 +2,7 @@
   <div id="app">
     <appHeader></appHeader>
     <searchInput v-on:search:submit="searchSubmit"></searchInput>
+    <validation v-bind:inputIsInvalid="inputIsInvalid"></validation>
     <searchOutput :searchResults="resultsArray"></searchOutput>
   </div>
 </template>
@@ -12,13 +13,15 @@
   import appHeader from './components/Header.vue';
   import searchInput from './components/SearchInput.vue';
   import searchOutput from './components/SearchOutput.vue';
+  import validation from './components/InputValidation.vue';
 
   export default {
     name: 'app',
     data: function() {
       return {
         text:'',
-        searchResults: null
+        searchResults: null,
+        inputIsInvalid: false
       }
     },
     computed: {
@@ -34,18 +37,23 @@
     methods: {
       searchSubmit: function(text) {
         let app = this;
-
-        axios.get('https://www.reddit.com/r/' + text + '.json')
-          .then(function (response) {
-            app.searchResults = response;
-          })
-          .catch(function(err) {
-            console.log(err);
-          });
+        if (text === '') {
+          this.inputIsInvalid = true;
+        } else {
+          this.inputIsInvalid = false;
+          axios.get('https://www.reddit.com/r/' + text + '.json')
+            .then(function (response) {
+              app.searchResults = response;
+              app.text = '';
+            })
+            .catch(function (err) {
+              console.log(err);
+            });
+        }
       }
     },
     components: {
-      appHeader, searchInput, searchOutput
+      appHeader, searchInput, searchOutput, validation
     }
   }
 </script>
