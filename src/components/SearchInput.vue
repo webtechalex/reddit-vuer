@@ -19,7 +19,6 @@
     methods: {
       searchSubmit: function(e) {
         e.preventDefault();
-        console.log(this.text);
         this.$emit('search:submit', this.text);
         this.text = '';
       }

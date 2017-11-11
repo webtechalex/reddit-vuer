@@ -2,7 +2,7 @@
   <div id="app">
     <appHeader></appHeader>
     <searchInput v-on:search:submit="searchSubmit"></searchInput>
-    <searchOutput :searchResults="searchResults"></searchOutput>
+    <searchOutput :searchResults="resultsArray"></searchOutput>
   </div>
 </template>
 
@@ -21,23 +21,23 @@
         searchResults: null
       }
     },
+    computed: {
+      resultsArray: function() {
+        return (this.searchResults) ? this.searchResults.data.data.children.map((result, index) => ({
+          title: result.data.title,
+          selftext: result.data.selftext,
+          url: result.data.url,
+          id: result.data.id
+        })) : [];
+      }
+    },
     methods: {
       searchSubmit: function(text) {
         let app = this;
 
         axios.get('https://www.reddit.com/r/' + text + '.json')
           .then(function (response) {
-//            console.log(response.data.data.children);
-            const rawData = response.data.data.children;
-            const responseArray = Array.from(rawData).map((item, index) => {
-              return {
-                title: rawData[index].data.title,
-                selftext: rawData[index].data.selftext,
-                url: rawData[index].data.url
-              };
-            });
-            app.searchResults = responseArray;
-            console.log(app.searchResults);
+            app.searchResults = response;
           })
           .catch(function(err) {
             console.log(err);
