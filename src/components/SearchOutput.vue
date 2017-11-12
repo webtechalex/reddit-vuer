@@ -1,9 +1,15 @@
 <template>
-  <div v-if="searchResults.length" class="result-container">
-    <ul>
-      <li v-for="result in searchResults" v-bind:result="result">{{ result.title }}<p>{{ result.selftext }}</p><a v-bind:href="result.url">Read this thread...</a></li>
-    </ul>
-  </div>
+  <transition name="slide-fade">
+    <div v-if="searchResults.length" class="result-container">
+      <ul>
+        <li v-for="result in searchResults" v-bind:result="result">
+          {{ result.title }}
+          <p v-if="result.selftext.length">{{ result.selftext }}</p>
+          <a v-bind:href="result.url">Read this thread...</a>
+        </li>
+      </ul>
+    </div>
+  </transition>
 </template>
 
 <script>
@@ -28,5 +34,12 @@
   }
   p {
     color: gray;
+  }
+  .slide-fade-enter {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  .slide-fade-enter-active {
+    transition: all .8s ease;
   }
 </style>

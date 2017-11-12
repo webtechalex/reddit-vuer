@@ -3,6 +3,7 @@
     <appHeader></appHeader>
     <searchInput v-on:search:submit="searchSubmit"></searchInput>
     <validation v-bind:inputIsInvalid="inputIsInvalid"></validation>
+    <responseError v-bind:responseError="responseError"></responseError>
     <searchOutput :searchResults="resultsArray"></searchOutput>
   </div>
 </template>
@@ -14,6 +15,7 @@
   import searchInput from './components/SearchInput.vue';
   import searchOutput from './components/SearchOutput.vue';
   import validation from './components/InputValidation.vue';
+  import responseError from './components/ResponseError.vue'
 
   export default {
     name: 'app',
@@ -21,7 +23,8 @@
       return {
         text:'',
         searchResults: null,
-        inputIsInvalid: false
+        inputIsInvalid: false,
+        responseError: false
       }
     },
     computed: {
@@ -38,6 +41,7 @@
       searchSubmit: function(text) {
         let app = this;
         this.searchResults = null;
+        this.responseError = null;
         if (text === '') {
           this.inputIsInvalid = true;
         } else {
@@ -48,13 +52,13 @@
               app.text = '';
             })
             .catch(function (err) {
-              console.log(err);
+              app.responseError = true;
             });
         }
       }
     },
     components: {
-      appHeader, searchInput, searchOutput, validation
+      appHeader, searchInput, searchOutput, validation, responseError
     }
   }
 </script>

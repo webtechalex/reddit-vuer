@@ -52,5 +52,14 @@
     color: white;
     border: none;
     font-size: 16px;
+    outline: none;
+    box-shadow: lightgray 2px 2px 2px;
+  }
+  button:active {
+    background: darkseagreen;
+    position: relative;
+    top: 1px;
+    left: 1px;
+    box-shadow: lightgray 1px 1px 1px;
   }
 </style>

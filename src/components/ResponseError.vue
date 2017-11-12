@@ -1,16 +1,16 @@
 <template>
   <transition name="fade">
-    <div v-if="inputIsInvalid" class="validation">
-      <h2>Invalid Input</h2>
-      <p>Please enter a search term...</p>
+    <div v-if="responseError" class="validation">
+      <h2>Error</h2>
+      <p>Please try another search term...</p>
     </div>
   </transition>
 </template>
 
 <script>
   export default {
-    name: 'validation',
-    props: ['inputIsInvalid']
+    name: 'responseError',
+    props: ['responseError']
   }
 </script>
 
@@ -18,8 +18,8 @@
   .validation {
     width: 400px;
     margin: 0 auto;
-    border: 1px solid darkorange;
-    color: darkorange;
+    border: 1px solid darkred;
+    color: darkred;
     padding: 10px;
     box-sizing: border-box;
     text-align: center;
