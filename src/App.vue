@@ -28,7 +28,7 @@
       resultsArray: function() {
         return (this.searchResults) ? this.searchResults.data.data.children.map((result, index) => ({
           title: result.data.title,
-          selftext: result.data.selftext,
+          selftext: result.data.selftext.length ? result.data.selftext.substr(0, 198) + '...' : '',
           url: result.data.url,
           id: result.data.id
         })) : [];
@@ -37,6 +37,7 @@
     methods: {
       searchSubmit: function(text) {
         let app = this;
+        this.searchResults = null;
         if (text === '') {
           this.inputIsInvalid = true;
         } else {

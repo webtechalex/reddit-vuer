@@ -19,4 +19,7 @@
     padding: 10px;
     margin-bottom: 10px;
   }
+  .header p {
+    color: white;
+  }
 </style>

@@ -26,4 +26,7 @@
   a {
     color: mediumseagreen
   }
+  p {
+    color: gray;
+  }
 </style>
